@@ -42,9 +42,9 @@ export async function extractOcrData(
 // ─── Field extractors ─────────────────────────────────────────────────────────
 
 function extractPan(text: string): string | undefined {
-  // PAN format: AAABB1234C (5 alpha, 4 numeric, 1 alpha)
-  const match = text.match(/\b([A-Z]{5}[0-9]{4}[A-Z])\b/);
-  return match?.[1];
+  // OCR may lowercase letters or insert spaces between characters in a PAN.
+  const match = text.match(/\b([A-Z](?:\s*[A-Z]){4}\s*\d(?:\s*\d){3}\s*[A-Z])\b/i);
+  return match?.[1].replace(/\s+/g, '').toUpperCase();
 }
 
 function extractFolio(text: string): string | undefined {

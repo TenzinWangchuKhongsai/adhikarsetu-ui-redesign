@@ -91,7 +91,7 @@ const VALIDATION_CONFIGS: Record<DocumentType, DocValidationConfig> = {
     minReviewScore: 25,
     requiredPatterns: [
       {
-        regex: /[A-Z]{5}[0-9]{4}[A-Z]/,
+        regex: /\b[A-Z](?:\s*[A-Z]){4}\s*\d(?:\s*\d){3}\s*[A-Z]\b/i,
         label: 'Valid PAN Format (AAABB1234C)',
         failReason: 'No valid 10-character PAN number (5 letters, 4 digits, 1 letter) was detected.',
         failReasonHi: 'दस्तावेज़ में कोई वैध 10-अक्षरीय पैन नंबर नहीं मिला।',
