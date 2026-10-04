@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Landmark, Menu, X } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -15,10 +15,27 @@ interface NavbarProps {
 export default function Navbar({ showBack, backHref = '/', title }: NavbarProps) {
   const { lang, toggle } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const isHindi = lang === 'hi';
 
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen]);
+
   return (
-    <header className="site-header">
+    <>
+      <a className="skip-link" href="#main-content">{isHindi ? 'मुख्य सामग्री पर जाएँ' : 'Skip to main content'}</a>
+      <header className="site-header">
       <div className="nav-inner">
         <div className="nav-brand-group">
           {showBack && <Link href={backHref} className="nav-back" aria-label={isHindi ? 'वापस जाएँ' : 'Go back'}><ArrowLeft aria-hidden="true" /></Link>}
@@ -38,12 +55,13 @@ export default function Navbar({ showBack, backHref = '/', title }: NavbarProps)
           </div>
         </nav>
 
-        <div className="nav-actions">
+        <div className={`nav-actions${menuOpen ? ' menu-open' : ''}`}>
           <button type="button" className="language-button" onClick={toggle} aria-label={isHindi ? 'Switch to English' : 'Switch to Hindi'}>{isHindi ? 'EN' : 'हिंदी'}</button>
           <Link href="/case/new" className="btn btn-primary nav-cta">{isHindi ? 'नया मामला' : 'New case'} <ArrowRight aria-hidden="true" /></Link>
-          <button type="button" className="nav-menu-button" aria-label={menuOpen ? (isHindi ? 'मेनू बंद करें' : 'Close menu') : (isHindi ? 'मेनू खोलें' : 'Open menu')} aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen((open) => !open)}>{menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
+          <button ref={menuButtonRef} type="button" className="nav-menu-button" aria-label={menuOpen ? (isHindi ? 'मेनू बंद करें' : 'Close menu') : (isHindi ? 'मेनू खोलें' : 'Open menu')} aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen((open) => !open)}>{menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
         </div>
       </div>
-    </header>
+      </header>
+    </>
   );
 }

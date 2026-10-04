@@ -166,7 +166,7 @@ export default function CasesPage() {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Navbar showBack backHref="/" />
-      <div className="container-app" style={{ paddingTop: '32px', paddingBottom: '60px', maxWidth: '720px' }}>
+      <div id="main-content" role="main" tabIndex={-1} className="container-app" style={{ paddingTop: '32px', paddingBottom: '60px', maxWidth: '720px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
           <div>
             <h1 style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--color-primary-dark)', marginBottom: '4px' }}>

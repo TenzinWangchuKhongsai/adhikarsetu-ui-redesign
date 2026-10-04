@@ -44,7 +44,7 @@ export default function ChecklistPage() {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Navbar showBack backHref={`/case/${caseId}/documents`} />
-      <div className="container-app" style={{ paddingTop: '24px', paddingBottom: '60px', maxWidth: '720px' }}>
+      <div id="main-content" role="main" tabIndex={-1} className="container-app" style={{ paddingTop: '24px', paddingBottom: '60px', maxWidth: '720px' }}>
         <StepIndicator currentStep={3} />
 
         {/* Score + Progress header */}

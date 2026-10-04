@@ -85,7 +85,7 @@ function NewCaseInner() {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Navbar showBack backHref="/" />
-      <div className="container-app" style={{ paddingTop: '24px', paddingBottom: '60px', maxWidth: '640px' }}>
+      <div id="main-content" role="main" tabIndex={-1} className="container-app" style={{ paddingTop: '24px', paddingBottom: '60px', maxWidth: '640px' }}>
         <StepIndicator currentStep={1} />
 
         {/* Journey header */}

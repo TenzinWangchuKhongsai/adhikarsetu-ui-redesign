@@ -83,7 +83,8 @@ export default function HomePage() {
   return (
     <div className="site-shell">
       <Navbar />
-      <main>
+        <main id="main-content" tabIndex={-1}>
+
         <section className="hero-section" aria-labelledby="hero-title">
           <div className="hero-inner">
             <div className="hero-copy animate-fadeInUp">

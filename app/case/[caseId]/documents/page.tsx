@@ -57,7 +57,10 @@ export default function DocumentsPage() {
     // Smooth scroll to uploader
     const uploaderEl = document.getElementById('uploader-card');
     if (uploaderEl) {
-      uploaderEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      uploaderEl.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start',
+      });
     }
   }, []);
 
@@ -94,7 +97,7 @@ export default function DocumentsPage() {
   return (
     <div style={{ minHeight: '100vh' }}>
       <Navbar showBack backHref="/" />
-      <div className="container-app" style={{ paddingTop: '24px', paddingBottom: '60px', maxWidth: '720px' }}>
+      <div id="main-content" role="main" tabIndex={-1} className="container-app" style={{ paddingTop: '24px', paddingBottom: '60px', maxWidth: '720px' }}>
         <StepIndicator currentStep={2} />
 
         {/* Case info & Truthful Readiness Header */}
