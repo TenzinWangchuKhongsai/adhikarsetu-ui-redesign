@@ -1,49 +1,35 @@
-import { Analytics } from '@vercel/analytics/next'
-import type { Metadata, Viewport } from 'next'
-import './globals.css'
+import { Analytics } from '@vercel/analytics/next';
+import type { Metadata, Viewport } from 'next';
+import { Inter, Noto_Sans_Devanagari } from 'next/font/google';
+import './globals.css';
+import { LanguageProvider } from '@/hooks/useLanguage';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const devanagari = Noto_Sans_Devanagari({ subsets: ['devanagari'], variable: '--font-devanagari', display: 'swap' });
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+  title: 'AdhikarSetu — From Confusion to Claim',
+  description: 'Prepare investor claims one step at a time. Check documents, find missing evidence, and spot inconsistencies before submission.',
+  keywords: ['IEPF claim', 'unclaimed shares', 'legal heir', 'SEBI SCORES', 'investor rights India'],
+  openGraph: {
+    title: 'AdhikarSetu — From Confusion to Claim',
+    description: 'A guided workspace for preparing investor claims and organizing document evidence.',
+    type: 'website',
   },
-}
+};
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
-}
+  colorScheme: 'light',
+  themeColor: '#FCFAF8',
+};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${devanagari.variable}`}>
       <body className="antialiased">
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
-  )
+  );
 }
